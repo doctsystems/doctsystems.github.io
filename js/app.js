@@ -14,40 +14,6 @@
             });            
         },
 
-        //=====counter =====
-       
-        // MainApp.prototype.initCounter = function () {
-        //     var a = 0;
-        //     $(window).scroll(function() {
-        //         var oTop = $('#counter').offset().top - window.innerHeight;
-        //         if (a == 0 && $(window).scrollTop() > oTop) {
-        //             $('.counter-value').each(function() {
-        //                 var $this = $(this),
-        //                     countTo = $this.attr('data-count');
-        //                 $({
-        //                     countNum: $this.text()
-        //                 }).animate({
-        //                         countNum: countTo
-        //                     },
-
-        //                     {
-        //                         duration: 2000,
-        //                         easing: 'swing',
-        //                         step: function() {
-        //                             $this.text(Math.floor(this.countNum));
-        //                         },
-        //                         complete: function() {
-        //                             $this.text(this.countNum);
-        //                             //alert('finished');
-        //                         }
-
-        //                     });
-        //             });
-        //             a = 1;
-        //         }
-        //     });
-        // },
-
         //=====Filter=====
 
         MainApp.prototype.initFilter = function () {
@@ -102,7 +68,6 @@
          //===== magnific Popup =====
         MainApp.prototype.initPrint = function () {
             $('#lnkPrint').click(function(){
-                
                  window.print();
             });
         },
@@ -110,6 +75,7 @@
         //===== contact =====
         MainApp.prototype.initContact = function () {
             $('#contact-form').submit(function() {
+                // console.log('entro al submit del form');
 
                 var action = $(this).attr('action');
 
@@ -122,8 +88,8 @@
 
                     $.post(action, {
                             name: $('#name').val(),
-                            email: $('#email').val(),
-                            comments: $('#comments').val(),
+                            email: $('#_replyto').val(),
+                            message: $('#comments').val(),
                         },
                         function(data) {
                             document.getElementById('message').innerHTML = data;
@@ -136,6 +102,21 @@
                         }
                     );
                 });
+
+                // showMsj();
+                Swal.fire({
+                  showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                  },
+                  hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                  },
+                  icon: 'success',
+                  title: 'Thank you &nbsp;<strong> '+ $('#name').val() +'</strong>',
+                  html: '<p>Your message has been submitted to us.</p>',
+                  showConfirmButton: false,
+                  timer: 2500
+                })
                 return false;
             });
         },
